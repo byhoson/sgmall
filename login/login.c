@@ -63,7 +63,7 @@ void login() {
 		printf("아이디: %s\n",me.id);
 		printf("비밀번호: %s\n",me.pw);
 		printf("이름: %s\n",me.name);
-		printf("주소: %s",me.address);
+		printf("주소: %s\n",me.address);
 		break;
 	} else {
 		counter++;
