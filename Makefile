@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -W -Wall
 TARGET = main
-OBJECTS = login/login.o main.o
+OBJECTS = login/login.o customer/customer.o main.o
 
 all : $(TARGET)
 

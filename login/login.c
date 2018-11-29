@@ -1,20 +1,23 @@
 #include "login.h"
 
-void login() {
+customer customer_login() {
 	char id[50];
 	char pw[50];
 	char buffer[400];
 	char* tok;
-	int flag=0;
+	//int flag=0;
 	int counter=0;
 
 	customer me;
+
+	me.flag = 0;
 	
 	FILE* fp = fopen("customer.csv","r");
 
 	if(fp==NULL) {
 		printf("no file\n");
-		return;
+		//me.flag = 0;
+		return me;
 	}
 
 	printf("로그인 프로그램\n");
@@ -51,19 +54,19 @@ void login() {
 			tok = strtok(NULL,","); // get address
 			strcpy(me.address,tok); // save address
 
-			flag = 1;
+			me.flag = 1;
 			break; // escape the loop
 	}
 
 	fclose(fp);
 
-	if(flag) {
-		printf("==================\n");
+	if(me.flag) {
+	/*	printf("==================\n");
 		printf("회원번호: %d\n",me.number);
 		printf("아이디: %s\n",me.id);
 		printf("비밀번호: %s\n",me.pw);
 		printf("이름: %s\n",me.name);
-		printf("주소: %s\n",me.address);
+		printf("주소: %s\n",me.address);*/
 		break;
 	} else {
 		counter++;
@@ -75,6 +78,6 @@ void login() {
 	} // end while
 
 
-
+	return me;
 	
 }

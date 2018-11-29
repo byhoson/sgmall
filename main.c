@@ -1,12 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include "main.h"
 #include "login/login.h"
+#include "customer/customer.h"
 
 int main() {
 	
 	int input;
+	customer me;
 
 	printf("SG_MALL에 오신 것을 환영합니다.\n");
 	printf("1. 회원 로그인\n");
@@ -22,7 +21,12 @@ int main() {
 
 	switch(input) {
 		case 1: 
-			login();
+			me = customer_login();
+			if(me.flag) {
+				handle_customer(me);	
+			} else {
+				printf("fuck you\n");
+			}
 			break;
 		case 2: 
 			printf("구현 중..\n");
