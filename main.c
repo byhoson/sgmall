@@ -1,6 +1,8 @@
 #include "main.h"
 #include "login/login.h"
 #include "customer/customer.h"
+#include "signup/signup.h"
+#include "product/product.h"
 
 int main() {
 	
@@ -29,10 +31,10 @@ int main() {
 			}
 			break;
 		case 2: 
-			printf("구현 중..\n");
+			signup();
 			break;
 		case 3: 
-			printf("구현 중..\n");
+			handle_product();
 			break;
 		case 4: 
 			printf("구현 중..\n");
