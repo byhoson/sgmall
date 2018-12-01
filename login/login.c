@@ -55,6 +55,13 @@ customer customer_login() {
 			tok = strtok(NULL,","); // get address
 			strcpy(me.address,tok); // save address
 
+
+			tok = strtok(NULL,","); // get deposit
+			me.deposit = atoi(tok);
+
+			tok = strtok(NULL,","); // get status
+			me.status = atoi(tok);
+
 			me.flag = 1;
 			break; // escape the loop
 	}
