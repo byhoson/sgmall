@@ -5,10 +5,14 @@
 #include "product/product.h"
 
 int main() {
+
+//	while(1) {
 	
-	int input;
+	int input,flag=1;
 	customer me;
 
+	while(flag) {
+	printf("============================\n");
 	printf("SG_MALL에 오신 것을 환영합니다.\n");
 	printf("1. 회원 로그인\n");
 	printf("2. 회원 가입\n");
@@ -38,14 +42,24 @@ int main() {
 			break;
 		case 4: 
 			printf("구현 중..\n");
-			break;
+			break;	
 		case 5: 
-			printf("구현 중..\n");
+			flag = 0;
 			break;
-		//defalut: break;
+
 	}
 
 	
-
+	} // end while
 	return 0;
+}
+
+
+
+void erase_new_line(char* str) {
+	int i=0;
+	while(str[i] != '\n') {
+		i++;
+	}
+	str[i] = '\0';
 }

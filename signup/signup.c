@@ -2,7 +2,7 @@
 
 void signup() {
 	
-	char buffer[100];
+	char buffer[500];
 	char* tok;
 	customer me;
 	FILE* fp = fopen("customer.csv","r");
@@ -14,19 +14,19 @@ void signup() {
 	// handle name
 	fgetc(stdin); // 
 	printf("name: ");
-	fgets(buffer,100,stdin);
+	fgets(buffer,500,stdin);
 	strcpy(me.name,buffer);
 	erase_new_line(me.name);
 
 	// handle id
 	printf("id: ");
-	fgets(buffer,100,stdin);
+	fgets(buffer,500,stdin);
 	strcpy(me.id,buffer);
 	erase_new_line(me.id);
 
 	// id check
-	fgets(buffer,100,fp);
-	while(fgets(buffer,100,fp)) {
+	fgets(buffer,500,fp);
+	while(fgets(buffer,500,fp)) {
 		tok = strtok(buffer,","); // skip number
 		tok = strtok(NULL,","); // get id
 		if(strcmp(tok,me.id)) {
@@ -39,19 +39,19 @@ void signup() {
 
 	// handle pw
 	printf("비밀번호: ");
-	fgets(buffer,100,stdin);
+	fgets(buffer,500,stdin);
 	strcpy(me.pw,buffer);
 	erase_new_line(me.pw);
 
 	// handle pw check
 	printf("비밀번호 확인: ");
-	fgets(buffer,100,stdin);
+	fgets(buffer,500,stdin);
 	erase_new_line(buffer);
 	if(strcmp(buffer,me.pw)) me.flag = 0; // pw doens't match
 
 	// handle address
 	printf("주소: ");
-	fgets(buffer,100,stdin);
+	fgets(buffer,500,stdin);
 	strcpy(me.address,buffer);
 	erase_new_line(me.address);
 	
@@ -68,7 +68,7 @@ void signup() {
 		printf("NOT OK!\n");
 	}
 }
-
+/*
 void erase_new_line(char* str) {
 	int i=0;
 	while(str[i] != '\n') {
@@ -76,3 +76,4 @@ void erase_new_line(char* str) {
 	}
 	str[i] = '\0';
 }
+*/

@@ -20,6 +20,7 @@ customer customer_login() {
 		return me;
 	}
 
+	printf("====================\n");
 	printf("로그인 프로그램\n");
 
 

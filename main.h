@@ -16,4 +16,16 @@ typedef struct {
 	int flag; // 1 if customer found, 0 otherwise
 } customer;
 
+typedef struct {
+	int number;
+	char name[100];
+	char category[100];
+	int price;
+	int status;
+	int flag;
+} product;
+
+void erase_new_line(char*);
+
+
 #endif
