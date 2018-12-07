@@ -19,7 +19,7 @@ void handle_customer(customer me) {
 				handle_deposit(me);
 				break;
 			case 3:
-				handle_product();
+				handle_product(me);
 				break;
 			case 6:
 				flag = 0;
@@ -30,21 +30,25 @@ void handle_customer(customer me) {
 
 void handle_deposit(customer me) {
 
-	int input;
+	int input,flag=1;
 
-	printf("=====================\n");
-	printf("내 가상계좌 입금 및 출금\n");
-	printf("내 가상계좌 잔액: %d\n",me.deposit);
-	printf("---------------------\n");
-	printf("1. 입금하기\n");
-	printf("2. 출금하기\n");
-	printf("0. 이전 페이지로 돌아가기\n");
-
-	scanf("%d",&input);
-
-	switch(input) {
-		case 1: push_money(me); break;
-		case 2: pop_money(me); break;
+	while(flag) {
+		printf("=====================\n");
+		printf("----<가상계좌 입출금 서비스>---->\n");
+		printf("내 가상계좌 입금 및 출금\n");
+		printf("내 가상계좌 잔액: %d\n",me.deposit);
+		printf("---------------------\n");
+		printf("1. 입금하기\n");
+		printf("2. 출금하기\n");
+		printf("0. 이전 페이지로 돌아가기\n");
+		printf("입력: ");
+		scanf("%d",&input);
+	
+		switch(input) {
+			case 0: flag = 0; break;
+			case 1: push_money(me); break;
+			case 2: pop_money(me); break;
+		}
 	}
 }
 
@@ -56,7 +60,7 @@ void push_money(customer me) {
 
 
 	printf("-------------------\n");
-	printf("입금금액 입력: ");
+	printf("입금금액: ");
 	scanf("%d",&money);
 	me.deposit += money;
 
@@ -88,4 +92,31 @@ void pop_money(customer me) {
 
 }
 
+void handle_order(customer me, product pr) {
+	int input,flag=1;
+	
+	while(flag) {
+		printf("내 보유금액: %d\n", me.deposit);
+		printf("결제 금액: %d\n", pr.price);
 
+		if(me.deposit < pr.price) {
+			printf("잔액이 부족합니다. 입금하겠습니까?\n");
+			printf("0. 뒤로\n");
+			printf("1. 입금하기\n");
+			scanf("%d",&input);
+			
+			switch(input) {
+				case 0: 
+					flag = 0;
+					break;
+				case 1:
+					handle_deposit(me);
+					break;
+			}
+		} else {
+			printf("결제가 완료되었습니다.\n");
+			flag = 0;
+		}
+	}
+
+}

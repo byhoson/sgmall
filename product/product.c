@@ -1,8 +1,10 @@
 #include "product.h"
 
-void handle_product() {
+void handle_product(customer me) {
 	int input;
 	int flag=1;
+	int number; // product number
+	product pr;
 
 	while(flag) {
 
@@ -11,9 +13,8 @@ void handle_product() {
 		printf("0. 이전 화면으로 돌아가기\n");
 		printf("1. 이름으로 검색하기\n");
 		printf("2. 카테고리로 검색하기\n");
-		printf("3. 세일 상품 검색하기\n");
+		printf("3. 모두 보기\n");
 		printf("...\n");
-		printf("0. 이전 화면으로 돌아가기\n");
 		printf("선택: ");
 		scanf("%d",&input);
 	
@@ -28,12 +29,83 @@ void handle_product() {
 				search_by_category();
 				break;
 			case 3:
-				search_by_sale();
+				search_all();
 				break;
+		}
+
+		if(flag && me.flag) {
+			printf("-------------------------\n");
+			printf("0. 뒤로\n");
+			printf("[상품코드]. 해당 상품 검색하기\n");
+			printf("선택: ");
+			scanf("%d",&input);
+			if(input) {
+				number = input;
+				pr = search_by_number(number); // handle exception
+				printf("-------------------------\n");
+				printf("0. 뒤로\n");
+				printf("1. 구매하기\n");
+				printf("선택: ");
+				scanf("%d",&input);
+				if(input) {
+					handle_order(me,pr);
+				}
+			}
 		}
 
 	}
 }
+
+// TODO void search_all() {}
+
+product search_by_number(int number) {
+	char buffer[500];
+	FILE* fp = fopen("product.csv","r");
+	char* tok;
+	product pr;
+	pr.flag = 0;
+
+
+	fgets(buffer,500,fp);
+	while(fgets(buffer,500,fp)) {
+		// get number
+		tok = strtok(buffer,","); 
+		pr.number = atoi(tok);
+		if(pr.number != number) continue; // number doesn't match
+		pr.flag = 1;
+		
+		// get name
+		tok = strtok(NULL,","); 
+		strcpy(pr.name,tok);
+
+		// get category
+		tok = strtok(NULL,",");
+		strcpy(pr.category,tok);
+
+		// get price
+		tok = strtok(NULL,",");
+		pr.price = atoi(tok);
+
+		// get status
+		tok = strtok(NULL,",");
+		pr.status = atoi(tok);
+
+		printf("-------------------------\n");
+		printf("상품코드: %d\n",pr.number);
+		printf("상품명: %s\n",pr.name);
+		printf("카테고리: %s\n",pr.category);
+		printf("가격: %d\n",pr.price);
+
+		break;
+
+	}
+
+	fclose(fp);
+
+	return pr;
+
+}
+
 
 void search_by_name() {
 	
@@ -153,8 +225,56 @@ void search_by_category() {
 
 }
 
-void search_by_sale() {
-	printf("검색: ");
+void search_all() {
+	char buffer[500];
+	FILE* fp = fopen("product.csv","r");
+	char* tok;
+	product pr;
+	pr.flag = 0;
+
+	fgets(buffer,500,fp);
+	while(fgets(buffer,500,fp)) {
+		// get number
+		tok = strtok(buffer,","); 
+		pr.number = atoi(tok);
+		
+		// get name
+		tok = strtok(NULL,","); 
+		strcpy(pr.name,tok);
+
+		// get category
+		tok = strtok(NULL,",");
+		strcpy(pr.category,tok);	
+	
+		// get price
+		tok = strtok(NULL,",");
+		pr.price = atoi(tok);
+
+		// get status
+		tok = strtok(NULL,",");
+		pr.status = atoi(tok);
+
+		printf("-------------------------\n");
+		printf("상품코드: %d\n",pr.number);
+		printf("상품명: %s\n",pr.name);
+		printf("카테고리: %s\n",pr.category);
+		printf("가격: %d\n",pr.price);
+
+	}
+/*
+	if(pr.flag) {
+		printf("-------------------------\n");
+		printf("상품코드: %d\n",pr.number);
+		printf("상품명: %s\n",pr.name);
+		printf("카테고리: %s\n",pr.category);
+		printf("가격: %d\n",pr.price);
+
+	}
+*/
+
+	fclose(fp);
+
+
 
 }
 

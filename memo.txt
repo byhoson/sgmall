@@ -1,1 +1,3 @@
 exclude status -1 when logging in
+fix problem when logging in: ':'is erased when backspace is pressed
+handle exception: handle for every key pressed such as char ...

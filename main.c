@@ -10,6 +10,7 @@ int main() {
 	
 	int input,flag=1;
 	customer me;
+	me.flag=0; // not logged in
 
 	while(flag) {
 	printf("============================\n");
@@ -38,7 +39,7 @@ int main() {
 			signup();
 			break;
 		case 3: 
-			handle_product();
+			handle_product(me);
 			break;
 		case 4: 
 			printf("구현 중..\n");
