@@ -9,7 +9,7 @@
 #include "../customer/customer.h"
 
 
-void handle_product(customer);
+void handle_product(customer*);
 product search_by_number(int);
 void search_by_name();
 void search_by_category();

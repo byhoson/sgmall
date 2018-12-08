@@ -1,6 +1,6 @@
 #include "product.h"
 
-void handle_product(customer me) {
+void handle_product(customer* me) {
 	int input;
 	int flag=1;
 	int number; // product number
@@ -33,7 +33,7 @@ void handle_product(customer me) {
 				break;
 		}
 
-		if(flag && me.flag) {
+		if(flag && me->flag) {
 			printf("-------------------------\n");
 			printf("0. 뒤로\n");
 			printf("[상품코드]. 해당 상품 검색하기\n");
@@ -56,7 +56,6 @@ void handle_product(customer me) {
 	}
 }
 
-// TODO void search_all() {}
 
 product search_by_number(int number) {
 	char buffer[500];
