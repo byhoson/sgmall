@@ -20,5 +20,6 @@ typedef struct {
 */
 
 customer customer_login();
+int admin_login();
 
 #endif

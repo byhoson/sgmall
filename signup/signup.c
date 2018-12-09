@@ -68,12 +68,4 @@ void signup() {
 		printf("NOT OK!\n");
 	}
 }
-/*
-void erase_new_line(char* str) {
-	int i=0;
-	while(str[i] != '\n') {
-		i++;
-	}
-	str[i] = '\0';
-}
-*/
+

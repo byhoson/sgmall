@@ -184,7 +184,28 @@ void handle_order(customer* me, product pr) {
 			printf("현재 잔액: %d\n",me->deposit);
 				
 			flag = 0;
+
+			update_history(*me,pr);
 		}
 	}
+
+}
+
+
+void update_history(customer me, product pr) {
+	FILE* fp = fopen("history.csv","r");
+	int number=0;
+	char buffer[200];
+
+	while(fgets(buffer,200,fp)) number++;
+	
+	fclose(fp);
+
+	fp = fopen("history.csv","a");
+
+	fprintf(fp,"%d,%d,%d,0\n",number,me.number,pr.number);
+
+	fclose(fp);
+
 
 }

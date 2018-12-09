@@ -39,10 +39,10 @@ int main() {
 			signup();
 			break;
 		case 3: 
-			handle_product(me);
+			handle_product(&me);
 			break;
 		case 4: 
-			printf("구현 중..\n");
+			admin_login() ? printf("admin\n") : printf("not admin\n");
 			break;	
 		case 5: 
 			flag = 0;

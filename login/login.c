@@ -89,3 +89,31 @@ customer customer_login() {
 	return me;
 	
 }
+
+int admin_login() {
+	int counter=0;
+	char buffer[100];
+	int ret=1;
+
+	while(counter<3) {
+		// get id
+		printf("관리자 아이디: ");
+		scanf("%s",buffer);
+		if(strcmp(buffer,"admin")) ret = 0;
+		else ret = 1;
+		printf("buffer: %s\n",buffer);
+		
+		// get pw
+		printf("관리자 비밀번호: ");
+		scanf("%s",buffer);
+		if(strcmp(buffer,"password")) ret = 0;
+		else ret = 1;
+		printf("buffer: %s\n",buffer);
+
+		
+		if(ret) return 1;
+		else counter++;
+	}
+
+	return ret;
+}
