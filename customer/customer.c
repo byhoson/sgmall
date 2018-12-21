@@ -1,5 +1,6 @@
 #include "customer.h"
 
+// 사용자 관련 기능의 진입점.
 void handle_customer(customer me) {
 	int input,flag=1;
 	while(flag) {
@@ -29,6 +30,7 @@ void handle_customer(customer me) {
 	}
 }
 
+// 가상계좌 입출금 관련 기능의 진입점.
 void handle_deposit(customer* me) {
 
 	int input,flag=1;
@@ -53,6 +55,7 @@ void handle_deposit(customer* me) {
 	}
 }
 
+// 가상계좌에 입금을 수행하는 함수
 void push_money(customer* me) {
 	int money;
 	FILE* fp = fopen("customer.csv","r");
@@ -87,6 +90,7 @@ void push_money(customer* me) {
 	fclose(temp);
 }
 
+// 가상계좌로 부터 출금을 수행하는 함수.
 void pop_money(customer* me) {
 	int money;
 	FILE* fp = fopen("customer.csv","r");
@@ -128,6 +132,7 @@ void pop_money(customer* me) {
 
 }
 
+// 상품주문을 수행하는 함수.
 void handle_order(customer* me, product pr) {
 	
 	int input,flag=1;
@@ -191,7 +196,7 @@ void handle_order(customer* me, product pr) {
 
 }
 
-
+// 상품 주문의 과정에서 history.csv에 결과를 저장하는 함수. 
 void update_history(customer me, product pr) {
 	FILE* fp = fopen("history.csv","r");
 	int number=0;

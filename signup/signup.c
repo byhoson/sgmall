@@ -1,5 +1,6 @@
 #include "signup.h"
 
+// 회원가입을 수행. 성공 시 파일입출력을 통해 정보를 영구적으로 저장
 void signup() {
 	
 	char buffer[500];
@@ -12,7 +13,7 @@ void signup() {
 	printf("회원 가입 페이지\n");
 	
 	// handle name
-	fgetc(stdin); // 
+	fgetc(stdin); 
 	printf("name: ");
 	fgets(buffer,500,stdin);
 	strcpy(me.name,buffer);

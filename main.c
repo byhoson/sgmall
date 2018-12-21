@@ -3,6 +3,8 @@
 #include "customer/customer.h"
 #include "signup/signup.h"
 #include "product/product.h"
+#include "admin/admin.h"
+
 
 int main() {
 
@@ -42,7 +44,11 @@ int main() {
 			handle_product(&me);
 			break;
 		case 4: 
-			admin_login() ? printf("admin\n") : printf("not admin\n");
+			if(admin_login()) {
+				handle_admin();
+			} else {
+				printf("fuck you\n");
+			}
 			break;	
 		case 5: 
 			flag = 0;
@@ -56,7 +62,7 @@ int main() {
 }
 
 
-
+// fgets 함수를 사용할때 입력된newline character를 제거
 void erase_new_line(char* str) {
 	int i=0;
 	while(str[i] != '\n') {

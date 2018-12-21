@@ -1,5 +1,9 @@
 #include "login.h"
 
+/*
+ 표준입출력으로부터 로그인을 수행한 후 사용자의 정보를 반환하는 함수
+ 로그인 실패 시 리턴 타입의 flag를 이용하여 정보 전달
+ */
 customer customer_login() {
 	char id[50];
 	char pw[50];
@@ -90,6 +94,10 @@ customer customer_login() {
 	
 }
 
+/*
+ 관리자 로그인을 표준입출력을 통해 수행한 후 성공여부를 int로 반환.
+ 성공했을 경우 1, 실패했을 경우 0을 반환.
+ */
 int admin_login() {
 	int counter=0;
 	char buffer[100];

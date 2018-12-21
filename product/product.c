@@ -1,5 +1,6 @@
 #include "product.h"
 
+// 상품관련 기능의 진입점 역할 수행.
 void handle_product(customer* me) {
 	int input;
 	int flag=1;
@@ -56,7 +57,10 @@ void handle_product(customer* me) {
 	}
 }
 
-
+/*
+상품코드를 받아 해당 상품을  product type에 담아 반환.
+해당 상품이 없을 시 product의 flag를 이용하여 정보 전달. 
+ */
 product search_by_number(int number) {
 	char buffer[500];
 	FILE* fp = fopen("product.csv","r");
@@ -105,7 +109,7 @@ product search_by_number(int number) {
 
 }
 
-
+// 표준입출력으로 이름을 입력받아 일치하는 상품을 표준입출력에 출력해주는 함수
 void search_by_name() {
 	
 	
@@ -166,6 +170,7 @@ void search_by_name() {
 
 }
 
+// 표준입출력을 통해 카테고리를 입력받아 해당 상품 리스트를 출력.
 void search_by_category() {
 	char buffer[500];
 	FILE* fp = fopen("product.csv","r");
@@ -224,6 +229,7 @@ void search_by_category() {
 
 }
 
+// 표준입출력에 모든 상품의 리스트를 출력.
 void search_all() {
 	char buffer[500];
 	FILE* fp = fopen("product.csv","r");
