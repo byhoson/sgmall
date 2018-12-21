@@ -8,7 +8,7 @@ void handle_admin() {
 		printf("2. 상품 등록\n");
 		printf("3. 상품 정보 수정 및 삭제\n");
 		printf("4. 상품 조회 및 통계 보기\n");
-		printf("5. 구매 내역 및 통계 보기\n");
+		printf("5. 구매 내역, 통계, 배송 현황 수정\n");
 		printf("6. 로그아웃 및 종료\n");
 		printf("선택: ");
 		scanf("%d",&input);
@@ -16,6 +16,7 @@ void handle_admin() {
 		switch(input) {
 			case 1: see_customers(); break;
 			case 2: add_product(); break;
+			case 3: update_product(); break;
 			case 5: handle_history(); break;			
 		}
 	}
@@ -58,7 +59,7 @@ void handle_history() {
 		switch(input) {
 			case 0: flag=0;
 				break;
-			case 1: update_delivery(input);
+			case 1: update_delivery();
 				break;
 		}
 
@@ -257,4 +258,138 @@ void add_product() {
 	fclose(fp);
 	printf("상품이 등록되었습니다.\n");
 
+}
+
+void update_product() {
+	
+	int input;
+	product pr;
+	
+
+	printf("상품코드 입력: ");
+	scanf("%d",&input);
+	
+	pr = search_by_number(input);
+	
+	if(!pr.flag) {
+		printf("해당 상품이 없습니다.\n");
+		return;
+	} else {
+		printf("0. 뒤로\n");
+		printf("1. 상품 수정\n");
+		printf("2. 상품 삭제\n");
+		printf("입력: ");
+
+		scanf("%d",&input);
+
+		switch(input) {
+		
+			case 0: return;
+			case 1: edit_product(pr.number); break;
+			case 2: delete_product(pr.number); break;
+		
+		}
+	}
+	
+
+
+
+}
+
+void edit_product(int number) {
+	FILE* fp = fopen("product.csv","r");
+	FILE* temp = fopen("temp.csv","w");
+	product pr;
+	char buffer[300];
+
+	pr.number = number;
+
+	printf("-------상품 수정하기------\n");
+	
+	printf("상품명: ");
+	scanf("\n");
+	fgets(buffer,300,stdin);
+	erase_new_line(buffer);
+	strcpy(pr.name, buffer);
+
+	printf("카테고리: ");
+	fgets(buffer,300,stdin);
+	erase_new_line(buffer);
+	strcpy(pr.category, buffer);
+
+	printf("가격: ");
+	scanf("%d",&pr.price);
+
+	printf("상태: ");
+	scanf("%d",&pr.status);
+
+
+	// update file
+	for(int i=0; i<pr.number; i++) {
+		fgets(buffer,300,fp);
+		fputs(buffer,temp);
+	}
+
+	fgets(buffer,300,fp);
+	fprintf(temp, "%d,%s,%s,%d,%d\n", pr.number,pr.name,pr.category,pr.price,pr.status);
+
+	while(fgets(buffer,300,fp)) {
+		fputs(buffer,temp);
+	}
+
+	printf("상품이 수정되었습니다.\n");
+
+	remove("product.csv");
+	rename("temp.csv","product.csv");
+
+
+	fclose(fp);
+	fclose(temp);
+}
+
+void delete_product(int number) {
+	FILE* fp = fopen("product.csv","r");
+	FILE* temp = fopen("temp.csv","w");
+
+	char buffer[300];
+	char* tok;
+	product pr;
+	pr.number = number;
+
+	for(int i=0; i<pr.number; i++) {
+		fgets(buffer,300,fp);
+		fputs(buffer,temp);
+	}
+
+	fgets(buffer,300,fp);
+	
+	// number
+	tok = strtok(buffer,",");
+	
+	// name
+	tok = strtok(NULL,",");
+	strcpy(pr.name,tok);
+
+	// category
+	tok = strtok(NULL,",");
+	strcpy(pr.category,tok);
+
+	// price
+	tok = strtok(NULL,",");
+	pr.price = atoi(tok);
+	
+	fprintf(temp, "%d,%s,%s,%d,-1\n", pr.number,pr.name,pr.category,pr.price);
+
+	while(fgets(buffer,300,fp)) {
+		fputs(buffer,temp);
+	}
+
+	printf("상품이 삭제되었습니다.\n");
+
+	remove("product.csv");
+	rename("temp.csv","product.csv");
+
+
+	fclose(fp);
+	fclose(temp);
 }
