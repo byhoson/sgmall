@@ -65,8 +65,10 @@ customer customer_login() {
 
 			tok = strtok(NULL,","); // get status
 			me.status = atoi(tok);
+		//	printf("atoi: %d\n",atoi(tok));
+		//	if(me.status == -1) me.flag = 0;
 
-			me.flag = 1;
+			if(me.status != -1) me.flag = 1;
 			break; // escape the loop
 	}
 

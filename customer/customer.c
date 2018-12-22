@@ -7,7 +7,7 @@ void handle_customer(customer me) {
 		printf("========================\n");
 		printf("내 잔액: %d\n",me.deposit);
 		printf("%s님, SG-MALL에 오신 것을 환영합니다.\n",me.name);	
-		printf("1. 회원정보 수정\n");
+		printf("1. 회원정보 수정 및 탈퇴\n");
 		printf("2. 가상계좌 입금 및 출금\n");
 		printf("3. 상품 검색\n");
 		printf("4. 구매 내역 조회\n");
@@ -17,6 +17,9 @@ void handle_customer(customer me) {
 		scanf("%d",&input);
 
 		switch(input) {
+			case 1:
+				update_profile(&me);
+				break;
 			case 2:
 				handle_deposit(&me);
 				break;
@@ -27,7 +30,112 @@ void handle_customer(customer me) {
 				flag = 0;
 				break;
 		}
+
+		if(me.status == -1) break;
 	}
+}
+
+void update_profile(customer* me) {
+	int input;
+
+	printf("0. 뒤로\n");
+	printf("1. 수정\n");
+	printf("2. 탈퇴\n");
+	printf("입력: ");
+	
+	scanf("%d",&input);
+
+	switch(input) {
+		case 1: edit_profile(me);
+			break;
+		case 2: delete_profile(me);
+			break;
+	}
+}
+
+void edit_profile(customer* me) {
+	FILE* fp = fopen("customer.csv","r");
+	FILE* temp = fopen("temp.csv","w");
+	char buffer[500];
+
+	
+	printf("-------회원정보 수정하기------\n");
+	
+	printf("비밀번호: ");
+	scanf("\n");
+	fgets(buffer,500,stdin);
+	erase_new_line(buffer);
+	strcpy(me->pw, buffer);
+
+	printf("이름: ");
+	fgets(buffer,500,stdin);
+	erase_new_line(buffer);
+	strcpy(me->name, buffer);
+
+	printf("주소: ");
+	fgets(buffer,500,stdin);
+	erase_new_line(buffer);
+	strcpy(me->address, buffer);
+
+
+	// update file
+	for(int i=0; i<me->number; i++) {
+		fgets(buffer,500,fp);
+		fputs(buffer,temp);
+	}
+
+	fgets(buffer,500,fp);
+	fprintf(temp, "%d,%s,%s,%s,%s,%d,1\n", me->number,me->id,me->pw,me->name,me->address,me->deposit);
+
+	while(fgets(buffer,300,fp)) {
+		fputs(buffer,temp);
+	}
+
+	printf("회원정보가 수정되었습니다.\n");
+
+	remove("customer.csv");
+	rename("temp.csv","customer.csv");
+
+
+	fclose(fp);
+	fclose(temp);
+
+
+}
+
+void delete_profile(customer* me) {
+
+	FILE* fp = fopen("customer.csv","r");
+	FILE* temp = fopen("temp.csv","w");
+
+	char buffer[500];
+
+
+	for(int i=0; i<me->number; i++) {
+		fgets(buffer,500,fp);
+		fputs(buffer,temp);
+	}
+
+	fgets(buffer,500,fp);
+		
+	fprintf(temp, "%d,%s,%s,%s,%s,%d,-1\n", me->number,me->id,me->pw,me->name,me->address,me->deposit);
+
+
+	while(fgets(buffer,300,fp)) {
+		fputs(buffer,temp);
+	}
+
+	me->status = -1;
+
+	printf("탈퇴되었습니다.\n");
+
+	remove("customer.csv");
+	rename("temp.csv","customer.csv");
+
+
+	fclose(fp);
+	fclose(temp);
+
 }
 
 // 가상계좌 입출금 관련 기능의 진입점.
