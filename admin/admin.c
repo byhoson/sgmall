@@ -20,7 +20,9 @@ void handle_admin() {
 			case 1: see_customers(); break;
 			case 2: add_product(); break;
 			case 3: update_product(); break;
-			case 5: handle_history(); break;			
+			case 4: search_all(); break;
+			case 5: handle_history(); break;
+			case 6: flag=0;
 			default: 
 				printf("##### 잘못된 입력입니다. #####\n");
 				break;

@@ -39,6 +39,7 @@ void handle_product(customer* me) {
 		}
 
 		if(flag && me->flag) {
+			
 			printf("------------------------------\n");
 			printf("0. 뒤로\n");
 			printf("구매하려면 상품코드를 입력하세요.\n");
@@ -47,14 +48,18 @@ void handle_product(customer* me) {
 			if(input) {
 				number = input;
 				pr = search_by_number(number); // handle exception
-				printf("------------------------------\n");
-				printf("0. 뒤로\n");
-				printf("1. 구매하기\n");
-				printf("------------------------------\n");
-				printf("선택: ");
-				scanf("%d",&input);
-				if(input) {
-					handle_order(me,pr);
+				if(pr.flag){
+					printf("------------------------------\n");
+					printf("0. 뒤로\n");
+					printf("1. 구매하기\n");
+					printf("------------------------------\n");
+					printf("선택: ");
+					scanf("%d",&input);
+					if(input) {
+						handle_order(me,pr);
+					}
+				} else {
+					printf("##### 해당상품이 없습니다. #####\n");
 				}
 			}
 		}
