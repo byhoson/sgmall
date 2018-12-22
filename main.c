@@ -15,14 +15,14 @@ int main() {
 	me.flag=0; // not logged in
 
 	while(flag) {
-	printf("============================\n");
+	printf("==============================\n");
 	printf("SG_MALL에 오신 것을 환영합니다.\n");
 	printf("1. 회원 로그인\n");
 	printf("2. 회원 가입\n");
 	printf("3. 상품 검색\n");
 	printf("4. 관리자 로그인\n");
 	printf("5. 종료\n");
-
+	printf("------------------------------\n");
 	printf("선택: ");
 
 	scanf("%d",&input);
@@ -52,6 +52,9 @@ int main() {
 			break;	
 		case 5: 
 			flag = 0;
+			break;
+		default:
+			printf("##### 잘못된 입력입니다. #####\n");
 			break;
 
 	}

@@ -24,7 +24,7 @@ customer customer_login() {
 		return me;
 	}
 
-	printf("====================\n");
+	printf("==============================\n");
 	printf("로그인 프로그램\n");
 
 
@@ -105,21 +105,22 @@ int admin_login() {
 	char buffer[100];
 	int ret=1;
 
+	printf("==============================\n");
+	printf("관리자 로그인\n");
+
 	while(counter<3) {
 		// get id
 		printf("관리자 아이디: ");
 		scanf("%s",buffer);
 		if(strcmp(buffer,"admin")) ret = 0;
 		else ret = 1;
-		printf("buffer: %s\n",buffer);
-		
+				
 		// get pw
 		printf("관리자 비밀번호: ");
 		scanf("%s",buffer);
 		if(strcmp(buffer,"password")) ret = 0;
 		else ret = 1;
-		printf("buffer: %s\n",buffer);
-
+	
 		
 		if(ret) return 1;
 		else counter++;

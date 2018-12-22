@@ -9,8 +9,8 @@ void signup() {
 	FILE* fp = fopen("customer.csv","r");
 	me.number = 1;
 
-	printf("=====================\n");
-	printf("회원 가입 페이지\n");
+	printf("==============================\n");
+	printf("회원 가입\n");
 	
 	// handle name
 	fgetc(stdin); 
@@ -61,12 +61,12 @@ void signup() {
 
 
 	if(me.flag) {
-		printf("number: %d\n",me.number);
+		printf("##### 가입되었습니다. 로그인하세요. #####\n");
 		fp = fopen("customer.csv","a");
 		fprintf(fp,"%d,%s,%s,%s,%s,0,1\n",me.number,me.id,me.pw,me.name,me.address);
 		fclose(fp);
 	} else {
-		printf("NOT OK!\n");
+		printf("##### 회원가입에 실패하였습니다. #####\n");
 	}
 }
 

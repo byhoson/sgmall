@@ -1,15 +1,18 @@
 #include "admin.h"
 
+// 관리자 기능 진입점
 void handle_admin() {
 	int input,flag=1;
 	while(flag) {
+		printf("==============================\n");
 		printf("SG-MALL 관리자 페이지\n");
 		printf("1. 회원 정보 조회\n");
 		printf("2. 상품 등록\n");
 		printf("3. 상품 정보 수정 및 삭제\n");
 		printf("4. 상품 조회 및 통계 보기\n");
-		printf("5. 구매 내역, 통계, 배송 현황 수정\n");
+		printf("5. 구매 내역, 배송 현황 수정\n");
 		printf("6. 로그아웃 및 종료\n");
+		printf("------------------------------\n");
 		printf("선택: ");
 		scanf("%d",&input);
 
@@ -18,10 +21,15 @@ void handle_admin() {
 			case 2: add_product(); break;
 			case 3: update_product(); break;
 			case 5: handle_history(); break;			
+			default: 
+				printf("##### 잘못된 입력입니다. #####\n");
+				break;
+
 		}
 	}
 }
 
+// 구매내역, 배송 현황 수정
 void handle_history() {
 	int input,flag=1;
 
@@ -30,6 +38,9 @@ void handle_history() {
 		FILE* fp = fopen("history.csv","r");
 		char buffer[100];
 		char* tok;
+
+		printf("==============================\n");
+		printf("구매 내역, 통계, 배송 현황 수정\n");
 
 		fgets(buffer,100,fp);
 	
@@ -51,7 +62,8 @@ void handle_history() {
 	
 		printf("0. 뒤로\n");
 		printf("1. 배송 현황 수정\n");
-		printf("2. 통계 보기\n");
+		//printf("2. 통계 보기\n");
+		printf("------------------------------\n");
 		printf("입력: ");
 
 		scanf("%d",&input);
@@ -61,6 +73,10 @@ void handle_history() {
 				break;
 			case 1: update_delivery();
 				break;
+			default: 
+				printf("##### 잘못된 입력입니다. #####\n");
+				break;
+
 		}
 
 		fclose(fp);
@@ -69,7 +85,7 @@ void handle_history() {
 
 }
 
-
+// 배송현황 수정
 void update_delivery() {
 	int order_number;
 	int product_number;
@@ -81,6 +97,10 @@ void update_delivery() {
 	char buffer[100];
 	char* tok;
 
+	printf("==============================\n");
+	printf("배송 현황 수정\n");
+
+
 	printf("주문번호: ");
 	scanf("%d",&order_number);
 
@@ -90,7 +110,7 @@ void update_delivery() {
 
 	fclose(fp);
 
-	printf("-----------주문 정보----------\n");
+	printf("------------------------------\n");
 
 	// order number
 	tok = strtok(buffer,",");
@@ -111,12 +131,13 @@ void update_delivery() {
 	delivery_status = atoi(tok);
 	printf("배송현황: %d\n", atoi(tok));
 
-	printf("-----------------------------\n");
+	printf("------------------------------\n");
 
 	printf("배송현황 변경\n");
 	printf("0. 배송 준비\n");
 	printf("1. 배송 중\n");
 	printf("2. 배송 완료\n");
+	printf("------------------------------\n");
 	printf("입력: ");
  	scanf("%d",&delivery_status);
 	
@@ -140,7 +161,7 @@ void update_delivery() {
 	remove("history.csv");
 	rename("temp.csv","history.csv");
 
-	printf("수정이 완료되었습니다.\n");
+	printf("##### 수정이 완료되었습니다. #####\n");
 
 
 	fclose(fp);
@@ -148,6 +169,7 @@ void update_delivery() {
 
 }
 
+// 회원정보 열람
 void see_customers() {
 
 	FILE* fp = fopen("customer.csv","r");
@@ -155,6 +177,9 @@ void see_customers() {
 	char* tok;
 	
 	customer me;
+
+	printf("==============================\n");
+	printf("사용자 리스트\n");
 
 	fgets(buffer,500,fp);
 
@@ -189,7 +214,7 @@ void see_customers() {
 
 		if(me.flag == 1) {
 			
-			printf("---------------\n");
+			printf("------------------------------\n");
 			printf("회원번호: %d\n",me.number);
 			printf("아이디: %s\n",me.id);
 			printf("비밀번호: %s\n",me.pw);
@@ -207,7 +232,7 @@ void see_customers() {
 	fclose(fp);
 }
 
-
+// 새 상품 등록
 void add_product() {
 
 	FILE* fp;
@@ -217,7 +242,7 @@ void add_product() {
 	pr.number = 0;
 
 
-
+	printf("==============================\n");
 	printf("상품 추가하기\n");
 	
 	
@@ -260,6 +285,7 @@ void add_product() {
 
 }
 
+// 상품 정보 수정 및 삭제
 void update_product() {
 	
 	int input;
@@ -272,12 +298,13 @@ void update_product() {
 	pr = search_by_number(input);
 	
 	if(!pr.flag) {
-		printf("해당 상품이 없습니다.\n");
+		printf("##### 해당 상품이 없습니다. #####\n");
 		return;
 	} else {
 		printf("0. 뒤로\n");
 		printf("1. 상품 수정\n");
 		printf("2. 상품 삭제\n");
+		printf("------------------------------\n");
 		printf("입력: ");
 
 		scanf("%d",&input);
@@ -287,6 +314,10 @@ void update_product() {
 			case 0: return;
 			case 1: edit_product(pr.number); break;
 			case 2: delete_product(pr.number); break;
+			default: 
+				printf("##### 잘못된 입력입니다. #####\n");
+				break;
+
 		
 		}
 	}
@@ -296,6 +327,8 @@ void update_product() {
 
 }
 
+
+// 상품 정보 수정
 void edit_product(int number) {
 	FILE* fp = fopen("product.csv","r");
 	FILE* temp = fopen("temp.csv","w");
@@ -347,6 +380,7 @@ void edit_product(int number) {
 	fclose(temp);
 }
 
+// 상품 삭제
 void delete_product(int number) {
 	FILE* fp = fopen("product.csv","r");
 	FILE* temp = fopen("temp.csv","w");

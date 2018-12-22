@@ -9,13 +9,13 @@ void handle_product(customer* me) {
 
 	while(flag) {
 
-		printf("===================\n");
+		printf("===============================\n");
 		printf("상품 검색하기\n");
 		printf("0. 이전 화면으로 돌아가기\n");
 		printf("1. 이름으로 검색하기\n");
 		printf("2. 카테고리로 검색하기\n");
 		printf("3. 모두 보기\n");
-		printf("...\n");
+		printf("------------------------------\n");
 		printf("선택: ");
 		scanf("%d",&input);
 	
@@ -32,20 +32,25 @@ void handle_product(customer* me) {
 			case 3:
 				search_all();
 				break;
+			default: 
+				printf("##### 잘못된 입력입니다. #####\n");
+				break;
+
 		}
 
 		if(flag && me->flag) {
-			printf("-------------------------\n");
+			printf("------------------------------\n");
 			printf("0. 뒤로\n");
-			printf("[상품코드]. 해당 상품 검색하기\n");
+			printf("구매하려면 상품코드를 입력하세요.\n");
 			printf("선택: ");
 			scanf("%d",&input);
 			if(input) {
 				number = input;
 				pr = search_by_number(number); // handle exception
-				printf("-------------------------\n");
+				printf("------------------------------\n");
 				printf("0. 뒤로\n");
 				printf("1. 구매하기\n");
+				printf("------------------------------\n");
 				printf("선택: ");
 				scanf("%d",&input);
 				if(input) {
@@ -93,7 +98,7 @@ product search_by_number(int number) {
 		tok = strtok(NULL,",");
 		pr.status = atoi(tok);
 
-		printf("-------------------------\n");
+		printf("------------------------------\n");
 		printf("상품코드: %d\n",pr.number);
 		printf("상품명: %s\n",pr.name);
 		printf("카테고리: %s\n",pr.category);
@@ -118,6 +123,9 @@ void search_by_name() {
 	char* tok;
 	product pr;
 	pr.flag = 0;
+
+	printf("==============================\n");
+	printf("상품명으로 검색하기\n");
 
 	fgetc(stdin);
 	printf("검색: ");
@@ -147,7 +155,7 @@ void search_by_name() {
 		tok = strtok(NULL,",");
 		pr.status = atoi(tok);
 
-		printf("-------------------------\n");
+		printf("------------------------------\n");
 		printf("상품코드: %d\n",pr.number);
 		printf("상품명: %s\n",pr.name);
 		printf("카테고리: %s\n",pr.category);
@@ -178,6 +186,9 @@ void search_by_category() {
 	product pr;
 	pr.flag = 0;
 
+	printf("==============================\n");
+	printf("카테고리로 검색하기\n");
+
 	fgetc(stdin);
 	printf("검색: ");
 	fgets(pr.category,50,stdin);
@@ -206,7 +217,7 @@ void search_by_category() {
 		tok = strtok(NULL,",");
 		pr.status = atoi(tok);
 
-		printf("-------------------------\n");
+		printf("------------------------------\n");
 		printf("상품코드: %d\n",pr.number);
 		printf("상품명: %s\n",pr.name);
 		printf("카테고리: %s\n",pr.category);
@@ -237,6 +248,10 @@ void search_all() {
 	product pr;
 	pr.flag = 0;
 
+	printf("==============================\n");
+	printf("모두보기\n");
+
+
 	fgets(buffer,500,fp);
 	while(fgets(buffer,500,fp)) {
 		// get number
@@ -259,7 +274,7 @@ void search_all() {
 		tok = strtok(NULL,",");
 		pr.status = atoi(tok);
 
-		printf("-------------------------\n");
+		printf("------------------------------\n");
 		printf("상품코드: %d\n",pr.number);
 		printf("상품명: %s\n",pr.name);
 		printf("카테고리: %s\n",pr.category);

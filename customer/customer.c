@@ -4,15 +4,18 @@
 void handle_customer(customer me) {
 	int input,flag=1;
 	while(flag) {
-		printf("========================\n");
+		printf("==============================\n");
+		printf("%s님, SG-MALL에 오신 것을 환영합니다.\n",me.name);
 		printf("내 잔액: %d\n",me.deposit);
-		printf("%s님, SG-MALL에 오신 것을 환영합니다.\n",me.name);	
+
+		printf("------------------------------\n");
 		printf("1. 회원정보 수정 및 탈퇴\n");
 		printf("2. 가상계좌 입금 및 출금\n");
 		printf("3. 상품 검색\n");
 		printf("4. 구매 내역 조회\n");
 		printf("5. 배송 내역 조회\n");
 		printf("6. 로그아웃 및 종료\n");
+		printf("------------------------------\n");
 		printf("선택: ");
 		scanf("%d",&input);
 
@@ -29,18 +32,26 @@ void handle_customer(customer me) {
 			case 6:
 				flag = 0;
 				break;
+			default: 
+				printf("##### 잘못된 입력입니다. #####\n");
+				break;
 		}
 
 		if(me.status == -1) break;
 	}
 }
 
+// 회원정보 수정 및 탈퇴를 수행하는 함수
 void update_profile(customer* me) {
 	int input;
 
+	printf("==============================\n");
+	printf("회원정보 수정 및 탈퇴\n");
 	printf("0. 뒤로\n");
 	printf("1. 수정\n");
 	printf("2. 탈퇴\n");
+	printf("------------------------------\n");
+
 	printf("입력: ");
 	
 	scanf("%d",&input);
@@ -50,16 +61,22 @@ void update_profile(customer* me) {
 			break;
 		case 2: delete_profile(me);
 			break;
+		default: 
+			printf("##### 잘못된 입력입니다. #####\n");
+			break;
+
 	}
 }
 
+// 회원정보 수정
 void edit_profile(customer* me) {
 	FILE* fp = fopen("customer.csv","r");
 	FILE* temp = fopen("temp.csv","w");
 	char buffer[500];
 
-	
-	printf("-------회원정보 수정하기------\n");
+		
+	printf("==============================\n");
+	printf("회원정보 수정하기\n");
 	
 	printf("비밀번호: ");
 	scanf("\n");
@@ -91,7 +108,7 @@ void edit_profile(customer* me) {
 		fputs(buffer,temp);
 	}
 
-	printf("회원정보가 수정되었습니다.\n");
+	printf("##### 회원정보가 수정되었습니다. #####\n");
 
 	remove("customer.csv");
 	rename("temp.csv","customer.csv");
@@ -103,12 +120,14 @@ void edit_profile(customer* me) {
 
 }
 
+// 회원정보 삭제
 void delete_profile(customer* me) {
 
 	FILE* fp = fopen("customer.csv","r");
 	FILE* temp = fopen("temp.csv","w");
 
 	char buffer[500];
+
 
 
 	for(int i=0; i<me->number; i++) {
@@ -127,7 +146,7 @@ void delete_profile(customer* me) {
 
 	me->status = -1;
 
-	printf("탈퇴되었습니다.\n");
+	printf("##### 탈퇴되었습니다. #####\n");
 
 	remove("customer.csv");
 	rename("temp.csv","customer.csv");
@@ -144,14 +163,15 @@ void handle_deposit(customer* me) {
 	int input,flag=1;
 
 	while(flag) {
-		printf("=====================\n");
-		printf("----<가상계좌 입출금 서비스>---->\n");
+		printf("==============================\n");
+		printf("가상계좌 입출금 서비스\n");
 		printf("내 가상계좌 입금 및 출금\n");
 		printf("내 가상계좌 잔액: %d\n",me->deposit);
-		printf("---------------------\n");
+		printf("------------------------------\n");
 		printf("1. 입금하기\n");
 		printf("2. 출금하기\n");
 		printf("0. 이전 페이지로 돌아가기\n");
+		printf("------------------------------\n");
 		printf("입력: ");
 		scanf("%d",&input);
 	
@@ -159,6 +179,10 @@ void handle_deposit(customer* me) {
 			case 0: flag = 0; break;
 			case 1: push_money(me); break;
 			case 2: pop_money(me); break;
+			default: 
+				printf("##### 잘못된 입력입니다. #####\n");
+				break;
+
 		}
 	}
 }
@@ -171,7 +195,7 @@ void push_money(customer* me) {
 	char buffer[500];
 
 
-	printf("-------------------\n");
+	printf("--------------------------------\n");
 	printf("입금금액: ");
 	scanf("%d",&money);
 	me->deposit += money;
@@ -191,7 +215,7 @@ void push_money(customer* me) {
 	remove("customer.csv");
 	rename("temp.csv","customer.csv");
 
-	printf("입금이 완료되었습니다.\n");
+	printf("##### 입금이 완료되었습니다. #####\n");
 	printf("현재 잔액: %d\n",me->deposit);
 	
 	fclose(fp);
@@ -206,12 +230,12 @@ void pop_money(customer* me) {
 	char buffer[500];
 
 
-	printf("-------------------\n");
+	printf("------------------------------\n");
 	printf("출급금액: ");
 	scanf("%d",&money);
 
 	if(money > me->deposit) {
-		printf("잔액이 부족합니다.\n");
+		printf("##### 잔액이 부족합니다. #####\n");
 		return;
 	}
 	me->deposit -= money;
@@ -232,7 +256,7 @@ void pop_money(customer* me) {
 	remove("customer.csv");
 	rename("temp.csv","customer.csv");
 
-	printf("출금이 완료되었습니다.\n");
+	printf("##### 출금이 완료되었습니다. #####\n");
 	printf("현재 잔액: %d\n",me->deposit);
 	
 	fclose(fp);
@@ -255,9 +279,10 @@ void handle_order(customer* me, product pr) {
 		printf("결제 금액: %d\n", pr.price);
 
 		if(me->deposit < pr.price) {
-			printf("잔액이 부족합니다. 입금하겠습니까?\n");
+			printf("##### 잔액이 부족합니다. 입금하겠습니까? #####\n");
 			printf("0. 뒤로\n");
 			printf("1. 입금하기\n");
+			printf("입력: ");
 			scanf("%d",&input);
 			
 			switch(input) {
@@ -267,6 +292,10 @@ void handle_order(customer* me, product pr) {
 				case 1:
 					handle_deposit(me);
 					break;
+				default: 
+					printf("##### 잘못된 입력입니다. #####\n");
+					break;
+
 			}
 		} else {
 		
@@ -293,7 +322,7 @@ void handle_order(customer* me, product pr) {
 			fclose(fp);
 			fclose(temp);
 
-			printf("결제가 완료되었습니다.\n");
+			printf("##### 결제가 완료되었습니다. #####\n");
 			printf("현재 잔액: %d\n",me->deposit);
 				
 			flag = 0;
